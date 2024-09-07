@@ -12,27 +12,30 @@ btnSubmit.addEventListener('click', Submit);
 btnSuccess.addEventListener('click', ResetPage);
 
 
-inputEmail.addEventListener('blur', () => {
+inputEmail.addEventListener('blur', OnInputFieldLeave);
+inputEmail.addEventListener('mouseleave', OnInputFieldLeave);
 
+function OnInputFieldLeave ()
+{
     if (inputEmail.value != "")
-    {
-        if (!Validation(inputEmail.value, inputEmail.type)) {
-            inputEmail.classList = '';
-            inputEmail.classList.add('email-error');
-            errorText.classList.remove('hidden');
+        {
+            if (!Validation(inputEmail.value, inputEmail.type)) {
+                inputEmail.classList = '';
+                inputEmail.classList.add('email-error');
+                errorText.classList.remove('hidden');
+            }
+            else {
+                errorText.classList.add('hidden');
+                inputEmail.classList = '';
+                inputEmail.classList.add('email-success');
+            }
         }
         else {
             errorText.classList.add('hidden');
             inputEmail.classList = '';
-            inputEmail.classList.add('email-success');
+            inputEmail.classList.add('email-normal');
         }
-    }
-    else {
-        errorText.classList.add('hidden');
-        inputEmail.classList = '';
-        inputEmail.classList.add('email-normal');
-    }
-});
+}
 
 
 function Submit (e) {
@@ -47,11 +50,16 @@ function Submit (e) {
             ShowSuccess();
         }
         else {
-            // Validation failed comes here
-            // console.log('nope');
+            inputEmail.classList = '';
+            inputEmail.classList.add('email-error');
+            errorText.classList.remove('hidden');
         }
     }
-    
+    else {
+        inputEmail.classList = '';
+        inputEmail.classList.add('email-error');
+        errorText.classList.remove('hidden');
+    }
 }
 
 function Validation (textToValidate, type) {
